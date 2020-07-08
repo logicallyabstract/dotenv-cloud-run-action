@@ -1,22 +1,25 @@
 const core = require('@actions/core');
-const wait = require('./wait');
+const { dotenvstring } = require('./dotenv');
 
-
-// most @actions toolkit packages have async methods
 async function run() {
-  try { 
-    const ms = core.getInput('milliseconds');
-    console.log(`Waiting ${ms} milliseconds ...`)
+  try {
+    const file = core.getInput('path') || '.env';
+    const prefix = core.getInput('prefix') || '';
 
-    core.debug((new Date()).toTimeString())
-    await wait(parseInt(ms));
-    core.debug((new Date()).toTimeString())
+    core.info(
+      `Retrieving env string from ${file} ${
+        prefix ? `with prefix ${prefix}` : `without prefix`
+      }...`,
+    );
 
-    core.setOutput('time', new Date().toTimeString());
-  } 
-  catch (error) {
+    const str = dotenvstring(file, prefix);
+
+    core.debug(`Pairs found: ${str}`);
+
+    core.setOutput('dotenvstring', str);
+  } catch (error) {
     core.setFailed(error.message);
   }
 }
 
-run()
+run();

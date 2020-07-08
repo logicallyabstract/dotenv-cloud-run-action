@@ -1,13 +1,14 @@
-name: 'Wait'
-description: 'Wait a designated number of milliseconds'
+name: 'Dotenv Cloud Run Action'
+description: 'Get a comma-separated string of env variables for Cloud Run'
 inputs:
-  milliseconds:  # id of input
-    description: 'number of milliseconds to wait'
-    required: true
-    default: '1000'
+  path:
+    description: 'Path to .env file'
+    default: '.env'
+  prefix:
+    description: 'Prefix to filter environment variables with'
 outputs:
-  time: # output will be available to future steps 
-    description: 'The message to output'
+  dotenvstring:
+    description: 'The string to use for Cloud Run --set-env-vars'
 runs:
   using: 'node12'
   main: 'dist/index.js'
