@@ -55,7 +55,7 @@ module.exports =
 const dotenv = __webpack_require__(63);
 const { existsSync } = __webpack_require__(747);
 
-module.exports.dotenvstring = function (file, prefix) {
+module.exports.loadDotEnv = function (file, prefix) {
   if (!existsSync(file)) {
     throw new Error('.env must exist or the path input must be valid');
   }
@@ -63,15 +63,20 @@ module.exports.dotenvstring = function (file, prefix) {
   const env = dotenv.config({ path: file });
 
   const pairs = [];
+  const map = {};
 
   for (const key in env.parsed) {
     if (key.startsWith(prefix)) {
       const value = env.parsed[key];
       pairs.push(`${key}=${value}`);
+      map[key] = env.parsed[key];
     }
   }
 
-  return pairs.join(',');
+  return {
+    dotenvstring: pairs.join(','),
+    parsed: map,
+  };
 };
 
 
@@ -208,7 +213,7 @@ module.exports = require("os");
 /***/ (function(__unusedmodule, __unusedexports, __webpack_require__) {
 
 const core = __webpack_require__(470);
-const { dotenvstring } = __webpack_require__(61);
+const { loadDotEnv } = __webpack_require__(61);
 
 async function run() {
   try {
@@ -221,11 +226,16 @@ async function run() {
       }...`,
     );
 
-    const str = dotenvstring(file, prefix);
+    const { dotenvstring, parsed } = loadDotEnv(file, prefix);
 
-    core.debug(`Pairs found: ${str}`);
+    core.debug(`Pairs found: ${dotenvstring}`);
+    core.debug(`Parsed: ${JSON.stringify(parsed)}`);
 
-    core.setOutput('dotenvstring', str);
+    core.setOutput('dotenvstring', dotenvstring);
+
+    for (const key in parsed) {
+      core.setOutput(key, parsed[key]);
+    }
   } catch (error) {
     core.setFailed(error.message);
   }

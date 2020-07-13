@@ -28,3 +28,9 @@ After this runs, you can use the output in your workflow like:
 ```
 ${{ steps.dotenv.outputs.dotenvstring }}
 ```
+
+You may also use each parsed and matched variable individually:
+
+```
+${{ steps.dotenv.outputs.TEST_VAR }}
+```
