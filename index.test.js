@@ -1,11 +1,16 @@
-const { dotenvstring } = require('./dotenv');
+const { loadDotEnv } = require('./dotenv');
 
 test('test runs with path', () => {
-  const str = dotenvstring('fixtures/.env-1', '');
-  expect(str).toBe('TEST=true,TESTA=false');
+  const { dotenvstring, parsed } = loadDotEnv('fixtures/.env-1', '');
+  expect(dotenvstring).toBe('TEST=true,TESTA=false');
+  expect(parsed.TEST).toBe('true');
+  expect(parsed.TESTA).toBe('false');
 });
 
 test('test runs with custom prefix', () => {
-  const str = dotenvstring('fixtures/.env-2', 'PREFIX_');
-  expect(str).toBe('PREFIX_TEST=true,PREFIX_TESTB=false');
+  const { dotenvstring, parsed } = loadDotEnv('fixtures/.env-2', 'PREFIX_');
+  expect(dotenvstring).toBe('PREFIX_TEST=true,PREFIX_TESTB=false');
+  expect(parsed.PREFIX_TEST).toBe('true');
+  expect(parsed.PREFIX_TESTB).toBe('false');
+  expect(parsed.TESTA).toBeUndefined();
 });

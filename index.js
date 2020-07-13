@@ -1,5 +1,5 @@
 const core = require('@actions/core');
-const { dotenvstring } = require('./dotenv');
+const { loadDotEnv } = require('./dotenv');
 
 async function run() {
   try {
@@ -12,11 +12,16 @@ async function run() {
       }...`,
     );
 
-    const str = dotenvstring(file, prefix);
+    const { dotenvstring, parsed } = loadDotEnv(file, prefix);
 
-    core.debug(`Pairs found: ${str}`);
+    core.debug(`Pairs found: ${dotenvstring}`);
+    core.debug(`Parsed: ${JSON.stringify(parsed)}`);
 
-    core.setOutput('dotenvstring', str);
+    core.setOutput('dotenvstring', dotenvstring);
+
+    for (const key in parsed) {
+      core.setOutput(key, parsed[key]);
+    }
   } catch (error) {
     core.setFailed(error.message);
   }
