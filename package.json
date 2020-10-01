@@ -25,7 +25,7 @@
   },
   "homepage": "https://github.com/logicallyabstract/dotenv-cloud-run-action#readme",
   "dependencies": {
-    "@actions/core": "^1.2.4",
+    "@actions/core": "^1.2.6",
     "dotenv": "^8.2.0"
   },
   "devDependencies": {
