@@ -4,8 +4,10 @@ inputs:
   path:
     description: 'Path to .env file'
     default: '.env'
+    required: false
   prefix:
     description: 'Prefix to filter environment variables with'
+    required: false
 outputs:
   dotenvstring:
     description: 'The string to use for Cloud Run --set-env-vars'
