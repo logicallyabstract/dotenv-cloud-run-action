@@ -12,5 +12,5 @@ outputs:
   dotenvstring:
     description: 'The string to use for Cloud Run --set-env-vars'
 runs:
-  using: 'node12'
+  using: 'node16'
   main: 'dist/index.js'

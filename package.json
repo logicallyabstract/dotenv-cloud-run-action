@@ -1,6 +1,6 @@
 {
   "name": "dotenv-cloud-run-action",
-  "version": "2.0.0",
+  "version": "3.0.0",
   "description": "GitHub Action to get a comma-separated string of env variables for Cloud Run",
   "main": "dist/index.js",
   "scripts": {
@@ -28,15 +28,15 @@
   },
   "homepage": "https://github.com/logicallyabstract/dotenv-cloud-run-action#readme",
   "dependencies": {
-    "@actions/core": "^1.5.0",
-    "dotenv": "^10.0.0"
+    "@actions/core": "^1.8.2",
+    "dotenv": "^16.0.1"
   },
   "devDependencies": {
-    "@vercel/ncc": "^0.30.0",
-    "eslint": "^7.32.0",
-    "eslint-config-prettier": "^8.3.0",
-    "jest": "^27.1.0",
-    "prettier": "^2.3.2"
+    "@vercel/ncc": "^0.34.0",
+    "eslint": "^8.16.0",
+    "eslint-config-prettier": "^8.5.0",
+    "jest": "^28.1.0",
+    "prettier": "^2.6.2"
   },
   "private": true
 }
